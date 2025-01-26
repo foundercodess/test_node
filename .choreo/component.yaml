@@ -1,0 +1,39 @@
+name: node-app-component
+version: 1.0.0
+description: Node.js application component for Choreo
+type: service
+
+inputs:
+  - name: PORT
+    type: integer
+    required: true
+    description: Port on which the application will run
+  - name: DATABASE_URL
+    type: string
+    required: true
+    description: Connection URL for the database
+
+outputs:
+  - name: health_status
+    type: string
+    description: Health check status of the Node.js app
+
+resources:
+  cpu: 0.5
+  memory: 512Mi
+
+lifecycle:
+  build:
+    steps:
+      - run: npm install
+      - run: npm run build
+  deploy:
+    steps:
+      - run: node server.js
+
+metadata:
+  tags:
+    - nodejs
+    - choreo
+    - service
+  owner: Ashutosh tripathi
